@@ -1,3 +1,7 @@
+package com.bee.test.controller;
+
+import com.bee.test.entity.Person;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,9 +26,15 @@ public class Controller extends HttpServlet {
 //        System.err.println("---");
         //解决乱码
         //qusi
+        Person person=new Person();
+
         req.setCharacterEncoding("UTF-8");
         String name=req.getParameter("name");
-        req.setAttribute("name",name);
+        person.setName(req.getParameter("name"));
+        person.setAge(Integer.parseInt(req.getParameter("age")));
+        person.setSex(req.getParameter("sex"));
+        req.setAttribute("person",person);
+//        req.setAttribute("name",name);
         System.out.println(name);
         req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
