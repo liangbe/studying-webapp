@@ -10,10 +10,13 @@
 <head>
     <title>Title</title>
 </head>
+<script>
+
+</script>
 <body>
-<form action="myController" method="post">
-    <input name="name">
-    return:${name}
+<form action="myController" method="GET">
+    <input name="name" value="${person.name}">
+   return:${person.name}
     <input value="提交" type="submit">
 </form>
 </body>
