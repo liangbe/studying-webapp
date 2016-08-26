@@ -1,6 +1,6 @@
 package com.bee.test.controller;
 
-import com.bee.test.entity.Person;
+import com.bee.test.entity.TypeSupp;
 import com.mchange.v2.c3p0.DriverManagerDataSource;
 
 import javax.servlet.ServletException;
@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by LIANGBE on 8/11/2016.
  */
@@ -36,9 +41,14 @@ public class testController  {
 
     @RequestMapping(value = "/myController", method = RequestMethod.GET)
     public ModelAndView  showPerson(@RequestParam String name){
-
-        typeSuppService.findAllDe();
-        return new ModelAndView("index");
+        Map<String,Object> map=new HashMap<String, Object>();
+        List<TypeSupp> tsList=new ArrayList<TypeSupp>();
+        if(name.equals("liangbe")){
+            tsList=typeSuppService.findAllDe();
+        }
+        map.put("tsList",tsList);
+        map.put("name",name);
+        return new ModelAndView("index",map);
     }
 
 
