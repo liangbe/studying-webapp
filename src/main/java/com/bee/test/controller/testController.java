@@ -1,6 +1,13 @@
 package com.bee.test.controller;
 
+import com.bee.test.entity.Person;
+import com.mchange.v2.c3p0.DriverManagerDataSource;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+
 
 import com.bee.test.service.TypeSuppService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * Created by LIANGBE on 8/11/2016.
@@ -27,6 +36,7 @@ public class testController  {
 
     @RequestMapping(value = "/myController", method = RequestMethod.GET)
     public ModelAndView  showPerson(@RequestParam String name){
+
         typeSuppService.findAllDe();
         return new ModelAndView("index");
     }
