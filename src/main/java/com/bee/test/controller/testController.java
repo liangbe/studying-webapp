@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.bee.test.service.TypeSuppService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,15 +42,17 @@ public class testController  {
     }
 
     @RequestMapping(value = "/myController", method = RequestMethod.GET)
-    public ModelAndView  showPerson(@RequestParam String name){
-        Map<String,Object> map=new HashMap<String, Object>();
+    @ResponseBody
+    public ResponseEntity<?> showPerson(@RequestParam String name){
+
         List<TypeSupp> tsList=new ArrayList<TypeSupp>();
         if(name.equals("liangbe")){
             tsList=typeSuppService.findAllDe();
         }
-        map.put("tsList",tsList);
-        map.put("name",name);
-        return new ModelAndView("index",map);
+        if(tsList.size()==0){
+            return new ResponseEntity<Object>( HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Object>(tsList, HttpStatus.OK);
     }
 
 

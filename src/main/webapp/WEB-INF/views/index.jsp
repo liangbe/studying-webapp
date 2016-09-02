@@ -7,37 +7,64 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-3.1.0.js"></script>
 <html>
 <head>
     <title>Title</title>
 </head>
 <script>
+    $(document).ready(function(){
 
+        $("#submit").click(function(){
+            var inputName=$("#name").val();
+
+            debugger;
+            $.ajax({
+                url:"${pageContext.request.contextPath }/myController",
+                dataType: 'json',
+                async:false,
+                data: {"name":inputName},
+                type: "GET",
+                success: function(req) {
+                    debugger;
+                    var tr=null;
+                    $.each(req, function (i, item) {
+debugger;
+                        tr = "<tr><td>"+item.id+"</td>" +
+                                "<td>"+item.category+"</td>" +
+                                "<td>"+item.code+"</td>" +
+                                "<td>"+item.description+"</td>" +
+                                "<td>"+item.sequence+"</td></tr>";
+                        debugger;
+                        $("#grid").append(tr);
+                    })
+
+
+                },
+                error: function() {
+                    debugger;
+                }
+
+            });
+
+        });
+    });
 </script>
 <body>
-<form action="myController" method="GET">
-    <input name="name" value="${name}">
-   return:${name}
-    <input value="提交" type="submit">
+<form >
+    <input name="name" id="name"/>
+    <button  id="submit" type="button">提交</button>
 </form>
-<c:if test="${empty tsList}">
-    <div class="h3" role="alert">
-        <span >No DATA!</span>
-    </div>
-</c:if>
-<c:if test="${!empty tsList}">
-<table border="1">
-    <tr><th>No.</th><th>Category</th><th>Code</th><th>Description</th><th>Sequence</th></tr>
-    <c:forEach items="${tsList}" var="typeSupp" varStatus="status">
-        <tr>
-            <td>${ status.index + 1}</td>
-            <td>${typeSupp.category}</td>
-            <td>${typeSupp.code}</td>
-            <td>${typeSupp.description}</td>
-            <td>${typeSupp.sequence}</td>
-        </tr>
-    </c:forEach>
+
+<table border="1" id="grid">
+    <tr id="header">
+        <th id="id">No.</th>
+        <th id="category">Category</th>
+        <th id="code">Code</th>
+        <th id="description">Description</th>
+        <th id="sequence">Sequence</th>
+    </tr>
+
 </table>
-</c:if>
 </body>
 </html>
