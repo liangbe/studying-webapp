@@ -43,15 +43,12 @@ public class testController  {
 
     @RequestMapping(value = "/myController", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<?> showPerson(@RequestParam String name){
+    public ResponseEntity<?> showPerson(){
 
         List<TypeSupp> tsList=new ArrayList<TypeSupp>();
-        if(name.equals("liangbe")){
+
             tsList=typeSuppService.findAllDe();
-        }
-        if(tsList.size()==0){
-            return new ResponseEntity<Object>( HttpStatus.NOT_FOUND);
-        }
+
         return new ResponseEntity<Object>(tsList, HttpStatus.OK);
     }
 
